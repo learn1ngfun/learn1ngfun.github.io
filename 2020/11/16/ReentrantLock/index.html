@@ -1,478 +1,519 @@
-<!DOCTYPE html>
-<html style="display: none;" lang="en">
-    <head>
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
     <meta charset="utf-8">
-    <!--
-        © Material Theme
-        https://github.com/viosey/hexo-theme-material
-        Version: 1.5.2 -->
-    <script>
-        window.materialVersion = "1.5.2"
-        // Delete localstorage with these tags
-        window.oldVersion = [
-            'codestartv1',
-            '1.3.4',
-            '1.4.0',
-            '1.4.0b1',
-            '1.5.0'
-        ]
-    </script>
-
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!-- Title -->
-    
-    <title>
-        
-        ZTF
-    </title>
-
-    <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" href="/img/favicon.png">
-
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="description" itemprop="description" content="">
-    <meta name="keywords" content="">
-    <meta name="theme-color" content="#0097A7">
-
-    <!-- Disable Fucking Bloody Baidu Tranformation -->
-    <meta http-equiv="Cache-Control" content="no-transform" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="/css/ie-blocker.css">
-
-        
-            <script src="/js/ie-blocker.en.js"></script>
-        
-    <![endif]-->
-
-    <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
-
-    <!-- Import queue -->
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
-
-    <!-- Import CSS -->
-    
-        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-        
-
-    
-
-    
-        
-            <link rel="stylesheet" href="/css/fontawesome.min.css">
-        
-    
-
-    <!-- Config CSS -->
-
-<!-- Other Styles -->
-<style>
-  body, html {
-    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-    overflow-x: hidden !important;
-  }
-  
-  code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  }
-
-  a {
-    color: #00838F;
-  }
-
-  .mdl-card__media,
-  #search-label,
-  #search-form-label:after,
-  #scheme-Paradox .hot_tags-count,
-  #scheme-Paradox .sidebar_archives-count,
-  #scheme-Paradox .sidebar-colored .sidebar-header,
-  #scheme-Paradox .sidebar-colored .sidebar-badge{
-    background-color: #0097A7 !important;
-  }
-
-  /* Sidebar User Drop Down Menu Text Color */
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
-  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
-    color: #0097A7 !important;
-  }
-
-  #post_entry-right-info,
-  .sidebar-colored .sidebar-nav li:hover > a,
-  .sidebar-colored .sidebar-nav li:hover > a i,
-  .sidebar-colored .sidebar-nav li > a:hover,
-  .sidebar-colored .sidebar-nav li > a:hover i,
-  .sidebar-colored .sidebar-nav li > a:focus i,
-  .sidebar-colored .sidebar-nav > .open > a,
-  .sidebar-colored .sidebar-nav > .open > a:hover,
-  .sidebar-colored .sidebar-nav > .open > a:focus,
-  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
-    color: #0097A7 !important;
-  }
-
-  .toTop {
-    background: #757575 !important;
-  }
-
-  .material-layout .material-post>.material-nav,
-  .material-layout .material-index>.material-nav,
-  .material-nav a {
-    color: #757575;
-  }
-
-  #scheme-Paradox .MD-burger-layer {
-    background-color: #757575;
-  }
-
-  #scheme-Paradox #post-toc-trigger-btn {
-    color: #757575;
-  }
-
-  .post-toc a:hover {
-    color: #00838F;
-    text-decoration: underline;
-  }
-
-</style>
-
-
-<!-- Theme Background Related-->
-
-    <style>
-      body{
-        background-color: #F5F5F5;
-      }
-
-      /* blog_info bottom background */
-      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
-        background-color: #fff;
-      }
-    </style>
-
-
-
-
-<!-- Fade Effect -->
-
-    <style>
-      .fade {
-        transition: all 800ms linear;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-        opacity: 1;
-      }
-
-      .fade.out{
-        opacity: 0;
-      }
-    </style>
-
-
-<!-- Import Font -->
-<!-- Import Roboto -->
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-
-
-<!-- Import Material Icons -->
-
-
-    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-
-
-
-    <!-- Import jQuery -->
-    
-        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
-    
-
-    <!-- WebAPP Icons -->
+    <meta name="keywords" content="ZTF">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="ZTF">
-    <meta name="msapplication-starturl" content="http://example.com/2020/11/16/ReentrantLock/">
-    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="ZTF">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
 
-    <!-- Site Verification -->
-    
-    
 
-    <!-- RSS -->
-    
+    <title>ZTF</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
 
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://example.com/2020/11/16/ReentrantLock/">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="ZTF">
-    <meta property="og:image" content="/img/favicon.png">
-    <meta property="og:description" content="">
-    
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
 
-    
-        <meta property="article:published_time" content="Mon Nov 16 2020 09:20:30 GMT+0800">
-        <meta property="article:modified_time" content="Mon Nov 30 2020 21:22:00 GMT+0800">
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="http://example.com/2020/11/16/ReentrantLock/index.html" />
-    
-
-    <!-- Structured-data for SEO -->
-    
-
-    <!-- Analytics -->
-    
-    
-    
-
-    <!-- Custom Head -->
-    
+    <script src="/libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="ZTF" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
-    
-        <body id="scheme-Isolation" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
-                
-                    <!-- Isolation Header -->
-                    <header class="header">
-    <div class="header-wrapper">
-        <!-- Header Copyright -->
-        <div class="header-copyright">
-            <div class="header-site">
-                ©&nbsp;
-                <script type="text/javascript">
-                    var fd = new Date();
-                    document.write(fd.getFullYear());
-                </script>
-                &nbsp;ZTF
-            </div>
-            <!--
-            I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright.
-            It will not impact the appearance and can give developers a lot of support :)
 
-            很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
-            它不会影响美观并可以给开发者很大的支持。 :)
-            -->
-            <div>
-                Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a>
-                <br>
-                Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a>
-            </div>
-        </div>
 
-        <!-- Header Title -->
-        <span class="header-title header-item">
-            <a href="/" title="ZTF">
-                ZTF
-            </a>
-        </span>
-
-        <p class="header-slogan header-item">
-        
-            
-                Hi, nice to meet you
-            
-        
-        </p>
-
-        <!-- Header Nav -->
-        <nav class="header-nav header-item">
-            <span class="header-nav-item">
-                <a href="/" title="Home">
-                    <span>Home</span>
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">ZTF</span>
                 </a>
-            </span>
-
-            <!-- Pages  -->
+            </div>
             
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">ZTF</div>
+        <div class="logo-desc">
             
-        </nav>
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
 
-        <!-- Header SNS -->
-        <div class="header-item header-sns_list">
-    <!-- Twitter -->
-    
-        <a href="https://twitter.com/twitter" target="_blank">
-            <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
-        </a>
     
 
-    <!-- Facebook -->
-    
-        <a href="https://www.facebook.com/facebook" target="_blank">
-            <i class="fa fa-facebook fa-lg" aria-hidden="true"></i>
-        </a>
-    
-
-    <!-- Google + -->
-    
-        <a href="https://www.google.com/" target="_blank">
-            <i class="fa fa-google-plus fa-lg" aria-hidden="true"></i>
-        </a>
-    
-
-    <!-- Weibo -->
-    
-
-    <!-- Instagram -->
-    
-
-    <!-- Tumblr -->
-    
-
-    <!-- Github -->
-    
-
-    <!-- LinkedIn -->
-    
-
-    <!-- Telegram -->
-    
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
 </div>
 
-    </div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
 </header>
 
-                
+    
 
-                <!-- Main Container -->
-                <main class="material-layout__content" id="main">
 
-                    <!-- Top Anchor -->
-                    <div id="top"></div>
 
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
                     
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
 
-                    <!-- Post TOC -->
-
-    
-
-
-
-<!-- Layouts -->
-
-    <!-- Post Module -->
-    <div class="material-post_container">
-
-        <div class="material-post mdl-grid">
-            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-
-                <!-- Post Header(Thumbnail & Title) -->
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-11-16
+                </div>
                 
 
+                
 
-    <!-- Isolation Post Header -->
-    <!-- Post thumbnail -->
-    
-        <!-- Post Header Info -->
-        <div class="post-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="/img/avatar.png" class="avatar-img" width="44px" height="44px" alt="Zhang Tengfei's avatar">
-            <span class="name-span">Zhang Tengfei</span>
+                
+
+                
+
+                
+            </div>
         </div>
+        <hr class="clearfix">
 
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
+        
 
+        
 
-
-                
-
-                <!-- Post Content -->
-                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
-    
-
-    
-        <div class="post-content_wrapper">
-            <p class="post-title">
-                
-            </p>
-            <h2 id="重入锁-ReentrantLock-源码浅析（一）"><a href="#重入锁-ReentrantLock-源码浅析（一）" class="headerlink" title="重入锁 ReentrantLock 源码浅析（一）"></a>重入锁 ReentrantLock 源码浅析（一）</h2><p>Java 除了使用关键字 synchronized 外，还使用了 ReentrantLock 实现独占锁的功能。相较于 synchronized，ReentrantLock 更为丰富和灵活，并且可重入。除此之外，我们或多或少还听说过一个名词 AQS。AQS 是Java 提供的底层同步工具，用一个 int 类型的变量表示同步状态，提供一系列的 CAS 操作来管理这个同步状态。我们今天的主角 ReentrantLock 也是基于 AQS 实现的。好的，废话少说，我们开始源码的探索路程。</p>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>首先啊，我们打开源码就看到了 ReentrantLock 实现了 Lock 接口，那么 Lock 里面的一些加锁啊解锁啊等方法自然也要一一实现。</p>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="重入锁-ReentrantLock-源码浅析（一）"><a href="#重入锁-ReentrantLock-源码浅析（一）" class="headerlink" title="重入锁 ReentrantLock 源码浅析（一）"></a>重入锁 ReentrantLock 源码浅析（一）</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java 除了使用关键字 synchronized 外，还使用了 ReentrantLock 实现独占锁的功能。相较于 synchronized，ReentrantLock 更为丰富和灵活，并且可重入。除此之外，我们或多或少还听说过一个名词 AQS。AQS 是Java 提供的底层同步工具，用一个 int 类型的变量表示同步状态，提供一系列的 CAS 操作来管理这个同步状态。我们今天的主角 ReentrantLock 也是基于 AQS 实现的。好的，废话少说，我们开始源码的探索路程。</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;首先啊，我们打开源码就看到了 ReentrantLock 实现了 Lock 接口，那么 Lock 里面的一些加锁啊解锁啊等方法自然也要一一实现。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ReentrantLock</span> <span class="token keyword">implements</span> <span class="token class-name">Lock</span><span class="token punctuation">,</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>Serializable </code></pre>
-<p>其实ReentrantLock 就一个属性，那就是 sync。但 ReentrantLock 自己实现了一个 Sync 的静态内部类。这个 Sync 继承了 AbstractQueuedSynchronizer，也就是我们常说的 AQS。所以 AQS 中的一些重要属性自然而然也被ReentrantLock 继承。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其实ReentrantLock 就一个属性，那就是 sync。但 ReentrantLock 自己实现了一个 Sync 的静态内部类。这个 Sync 继承了 AbstractQueuedSynchronizer，也就是我们常说的 AQS。所以 AQS 中的一些重要属性自然而然也被ReentrantLock 继承。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">abstract</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Sync</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractQueuedSynchronizer</span> <span class="token punctuation">{</span></code></pre>
-<p>进入 AbstractQueuedSynchronizer，我们依然可以看到里面也实现了一个静态内部类 Node。这个 Node 至关重要，它会出现在接下来的所有内容中。这次我只列举了ReentrantLock 需要用到的属性。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;进入 AbstractQueuedSynchronizer，我们依然可以看到里面也实现了一个静态内部类 Node。这个 Node 至关重要，它会出现在接下来的所有内容中。这次我只列举了ReentrantLock 需要用到的属性。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
         <span class="token comment" spellcheck="true">/** Marker to indicate a node is waiting in shared mode */</span>
-              <span class="token comment" spellcheck="true">/** 共享模式 */</span>
+        <span class="token comment" spellcheck="true">/** 共享模式 */</span>
         <span class="token keyword">static</span> <span class="token keyword">final</span> Node SHARED <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token comment" spellcheck="true">/** Marker to indicate a node is waiting in exclusive mode */</span>
-              <span class="token comment" spellcheck="true">/** 独占模式 */</span>
+        <span class="token comment" spellcheck="true">/** 独占模式 */</span>
         <span class="token keyword">static</span> <span class="token keyword">final</span> Node EXCLUSIVE <span class="token operator">=</span> null<span class="token punctuation">;</span>
 
         <span class="token comment" spellcheck="true">/** waitStatus value to indicate thread has cancelled */</span>
-              <span class="token comment" spellcheck="true">/** 表示当前节点处于 取消 状态 */</span>
+        <span class="token comment" spellcheck="true">/** 表示当前节点处于 取消 状态 */</span>
         <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> CANCELLED <span class="token operator">=</span>  <span class="token number">1</span><span class="token punctuation">;</span>
         <span class="token comment" spellcheck="true">/** waitStatus value to indicate successor's thread needs unparking */</span>
         <span class="token comment" spellcheck="true">/** 表示当前节点需要唤醒后继节点 */</span>
         <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> SIGNAL    <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-              <span class="token comment" spellcheck="true">/** node 节点的状态 */</span>
-              <span class="token keyword">volatile</span> <span class="token keyword">int</span> waitStatus<span class="token punctuation">;</span>
-              <span class="token comment" spellcheck="true">/** 因为需要构建双想链表，所以 prev 表示指向 node 节点的前一个节点*/</span>
+        <span class="token comment" spellcheck="true">/** node 节点的状态 */</span>
+        <span class="token keyword">volatile</span> <span class="token keyword">int</span> waitStatus<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">/** 因为需要构建双想链表，所以 prev 表示指向 node 节点的前一个节点*/</span>
         <span class="token keyword">volatile</span> Node prev<span class="token punctuation">;</span>
-              <span class="token comment" spellcheck="true">/** 指向 node 节点的后继节点*/</span>
+        <span class="token comment" spellcheck="true">/** 指向 node 节点的后继节点*/</span>
         <span class="token keyword">volatile</span> Node next<span class="token punctuation">;</span>
-              <span class="token comment" spellcheck="true">/** node 封装的线程 */</span>
-              <span class="token keyword">volatile</span> Thread thread<span class="token punctuation">;</span>
-              <span class="token comment" spellcheck="true">/** 阻塞队列的头节点 头节点对应的都是当前线程*/</span>
-            <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token keyword">volatile</span> Node head<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">/** node 封装的线程 */</span>
+        <span class="token keyword">volatile</span> Thread thread<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">/** 阻塞队列的头节点 头节点对应的都是当前线程*/</span>
+        <span class="token comment" spellcheck="true">/** 这里的 head 并不是阻塞队列双向链表的 head，可以把 head.next 当做阻塞队列的开始
+         *  我在这里就犯了迷糊，在空队列的定义上犹豫了一会，所以这里给大家提个醒。 
+         */</span>
+        <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token keyword">volatile</span> Node head<span class="token punctuation">;</span>
 
         <span class="token comment" spellcheck="true">/**
          * Tail of the wait queue, lazily initialized.  Modified only via
          * method enq to add new wait node.
          */</span>
-              <span class="token comment" spellcheck="true">/** 阻塞队列的尾节点 */</span>
+        <span class="token comment" spellcheck="true">/** 阻塞队列的尾节点 */</span>
             <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token keyword">volatile</span> Node tail<span class="token punctuation">;</span>
 
         <span class="token comment" spellcheck="true">/**
          * The synchronization state.
          */</span>
-              <span class="token comment" spellcheck="true">// 表示资源</span>
+        <span class="token comment" spellcheck="true">// 表示资源</span>
         <span class="token comment" spellcheck="true">// 独占模式：0 表示未加锁状态，>0 表示加锁状态</span>
             <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> state<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>ReentrantLock 里面需要用到的属性就大致讲完了，其实还有一个状态码为 0 的，它代表当前节点是新建的节点。哦，对了，AbstractQueuedSynchronizer 还继承了一个抽象类 AbstractOwnableSynchronizer，里面的exclusiveOwnerThread 属性及其 get、set 方法也是重点对象。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ReentrantLock 里面需要用到的属性就大致讲完了，其实还有一个状态码为 0 的，它代表当前节点是新建的节点。哦，对了，AbstractQueuedSynchronizer 还继承了一个抽象类 AbstractOwnableSynchronizer，里面的exclusiveOwnerThread 属性及其 get、set 方法也是重点对象。</p>
 <pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 独占锁模式：表示当前独占锁线程</span>
 <span class="token keyword">private</span> <span class="token keyword">transient</span> Thread exclusiveOwnerThread<span class="token punctuation">;</span>
 <span class="token keyword">protected</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">setExclusiveOwnerThread</span><span class="token punctuation">(</span>Thread thread<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -483,21 +524,21 @@
 <span class="token punctuation">}</span></code></pre>
 <p>介绍完属性，接下来开始进入源码的阅读，这次主讲公平锁。先大致列举一下加锁阶段的方法。</p>
 <p>lock()</p>
-<p>​    |–&gt;acquire() 竞争资源</p>
-<p>​                |–&gt; tryAquire() 尝试获取锁</p>
-<p>​                |–&gt; acquireQueued()  挂起当前线程</p>
-<p>​                |–&gt; shouldParkAfterFailedAcquire()// 当前线程获取锁资源失败后是否需要挂起呢？</p>
-<p>​                        true: 需要；  false  不需要</p>
-<pre><code>                                 |--&gt; parkAndCheckInterrupt()  挂起当前线程，唤醒之后返回当前线程的中断标记</code></pre>
-<p>​                | –&gt; addWaiter()将当前线程封装成node</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|–&gt;acquire() 竞争资源</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|–&gt; tryAquire() 尝试获取锁</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|–&gt; acquireQueued()  挂起当前线程</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|–&gt; shouldParkAfterFailedAcquire()// 当前线程获取锁资源失败后是否需要挂起呢？</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;true: 需要；  false  不需要</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|–&gt; parkAndCheckInterrupt()  挂起当前线程，唤醒之后返回当前线程的中断标记</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| –&gt; addWaiter()将当前线程封装成node</p>
 <p>OK，大致骨架梳理完了，源码开始，gogogogo!!</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 公平锁入口，不响应中断的加锁</span>
+<h3 id="acquire-int-arg-–-加锁"><a href="#acquire-int-arg-–-加锁" class="headerlink" title="acquire(int arg) – 加锁"></a>acquire(int arg) – 加锁</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 公平锁入口，不响应中断的加锁</span>
 <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">// 尝试获取锁，成功返回 true，失败返回 false.</span>
+    <span class="token comment" spellcheck="true">// 尝试获取锁，成功返回 true，失败返回 false.</span>
     <span class="token comment" spellcheck="true">/* addWaiter 将当前线程封装成 node 入队
      * acquireQueued 挂起当前线程 
      *               返回 true 表示挂起过程中线程被中断唤醒过
@@ -508,8 +549,8 @@
        <span class="token function">acquireQueued</span><span class="token punctuation">(</span><span class="token function">addWaiter</span><span class="token punctuation">(</span>Node<span class="token punctuation">.</span>EXCLUSIVE<span class="token punctuation">)</span><span class="token punctuation">,</span> arg<span class="token punctuation">)</span><span class="token punctuation">)</span>
     <span class="token function">selfInterrupt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>其中，acquire() 就是竞争资源的方法，首先回去尝试获取锁，成功了就执行其业务逻辑，不成功会将其包装成Node进入阻塞队列中并挂起。</p>
-<pre class=" language-java"><code class="language-java">
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其中，acquire() 就是竞争资源的方法，首先回去尝试获取锁，成功了就执行其业务逻辑，不成功会将其包装成Node进入阻塞队列中并挂起。</p>
+<h3 id="tryAcquire-int-acquires-–-尝试获取锁"><a href="#tryAcquire-int-acquires-–-尝试获取锁" class="headerlink" title="tryAcquire(int acquires) – 尝试获取锁"></a>tryAcquire(int acquires) – 尝试获取锁</h3><pre class=" language-java"><code class="language-java">
 <span class="token keyword">protected</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">tryAcquire</span><span class="token punctuation">(</span><span class="token keyword">int</span> acquires<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment" spellcheck="true">// 获取当前线程</span>
     <span class="token keyword">final</span> Thread current <span class="token operator">=</span> Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -547,8 +588,8 @@
     <span class="token comment" spellcheck="true">// 2. c > 0 且 ownerThread != currentThread.</span>
     <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>回到 acquire方法，tryAcquire 如果返回 true 取反后为 false，就返回业务层面了。可如果tryAcquire 为 false，取反后为 true，那么就要进入阻塞队列挂起了。接下来我们看一下 addWaiter()。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> Node <span class="token function">addWaiter</span><span class="token punctuation">(</span>Node mode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回到 acquire方法，tryAcquire 如果返回 true 取反后为 false，就返回业务层面了。可如果tryAcquire 为 false，取反后为 true，那么就要进入阻塞队列挂起了。接下来我们看一下 addWaiter()。</p>
+<h3 id="入队"><a href="#入队" class="headerlink" title="入队"></a>入队</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> Node <span class="token function">addWaiter</span><span class="token punctuation">(</span>Node mode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment" spellcheck="true">// 将当前节点封装到 node 中</span>
     Node node <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> mode<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment" spellcheck="true">// Try the fast path of enq; backup to full enq on failure</span>
@@ -573,7 +614,7 @@
     <span class="token function">enq</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> node<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>其实，addWaiter 方法无非就是将当前线程封装成 node节点加入到阻塞队列队尾中。如果一切进展顺利即上面所说的“快速入队”。如果中间出现阻塞队列为空队列或者 cas 插入队尾失败的情况则进入完整入队。接下来我们分析一下完整入队 enq()</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其实，addWaiter 方法无非就是将当前线程封装成 node节点加入到阻塞队列队尾中。如果一切进展顺利即上面所说的“快速入队”。如果中间出现阻塞队列为空队列或者 cas 插入队尾失败的情况则进入完整入队。接下来我们分析一下完整入队 enq()</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> Node <span class="token function">enq</span><span class="token punctuation">(</span><span class="token keyword">final</span> Node node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment" spellcheck="true">/** 自旋入队，只有当前 node 入队成功后，才会跳出循环*/</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -602,7 +643,7 @@
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>完全入队也很好理解，其实就是主要解决 addWaiter 没有入队成功的情况。如果你是因为空队列入队失败，那么我们就自己创建一个头节点，如果你是由于 cas 竞争入队失败，那么我们就自选入队直至成功。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;完全入队也很好理解，其实就是主要解决 addWaiter 没有入队成功的情况。如果你是因为空队列入队失败，那么我们就自己创建一个头节点，如果你是由于 cas 竞争入队失败，那么我们就自选入队直至成功。</p>
 <p>接下来是 acquireQueued() 了，我个人认为这个方法有点烦的，我会尽量复述清楚。</p>
 <p>这里先简单梳理一下 acquireQueued 的骨架。</p>
 <p>acquireQueued</p>
@@ -659,7 +700,7 @@
             <span class="token function">cancelAcquire</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> <span class="token function">shouldParkAfterFailedAcquire</span><span class="token punctuation">(</span>Node pred<span class="token punctuation">,</span> Node node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<h3 id="竞争逻辑"><a href="#竞争逻辑" class="headerlink" title="竞争逻辑"></a>竞争逻辑</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> <span class="token function">shouldParkAfterFailedAcquire</span><span class="token punctuation">(</span>Node pred<span class="token punctuation">,</span> Node node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment" spellcheck="true">// 获取前置节点的状态 （前面有写，建议翻看）</span>
     <span class="token keyword">int</span> ws <span class="token operator">=</span> pred<span class="token punctuation">.</span>waitStatus<span class="token punctuation">;</span>
     <span class="token comment" spellcheck="true">// 成立：前置节点是可以唤醒当前节点的，返回 true 后，parkAndCheckInterrupt park当前线程</span>
@@ -693,178 +734,605 @@
   LockSupport<span class="token punctuation">.</span><span class="token function">park</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">return</span> Thread<span class="token punctuation">.</span><span class="token function">interrupted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<h3 id="通篇总结"><a href="#通篇总结" class="headerlink" title="通篇总结"></a>通篇总结</h3><p>以上就是这篇文章的全部内容了，最后在概述一遍做个总结吧，主要是想梳理一下所有的源码知识点，毕竟无论是面试还是与人讨论我们都要大致说一下，总不能上来就滴水不漏地将整体细节全部描述出来。</p>
+<h3 id="通篇总结"><a href="#通篇总结" class="headerlink" title="通篇总结"></a>通篇总结</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以上就是这篇文章的全部内容了，最后在概述一遍做个总结吧，主要是想梳理一下所有的源码知识点，毕竟无论是面试还是与人讨论我们都要大致说一下，总不能上来就滴水不漏地将整体细节全部描述出来。</p>
 <p>① 如果我们用的是公平锁，那么我们就要调用FairSync 的 lock() 。</p>
 <p>② 然后 lock 调用 acquire，参数传入 1，设置 AQS的 state 的值。</p>
 <p>③ 进入 acquire 我们首先要尝试拿到锁（tryAcquire）,怎么去尝试拿到锁呢？我们先是获取当前线程，通过当前线程获取当前线程的状态值（state），如果状态值为 0，说明现在是无锁状态。然后判断当前线程前面有没有线程在等待（hasQueuedPredecessors），如果没有那么就通过 cas 的方式去设置 state值（compareAndSetState）。如果设置 state 值成功了，说明我们抢占锁成功了。把当前线程设置成独占者线程（setExclusiveOwnerThread），然后就返回 true 了。如果锁重入了呢，更新 state 值，再次设置新的 state，最后返回 true;</p>
 <p>④ 如果没有拿到锁，那么我们会将当前线程封装成一个 Node 节点，然后将这个节点添加到阻塞队列中。</p>
 <p>⑤进入到阻塞队列中我们还要看看当前线程是否是 park 状态，如果不是那么就将其挂起。并且唤醒线程的逻辑也在这个方法里。但唤醒的逻辑要下次再讲。到此整个加锁的过程全部完成。</p>
 
-            
-        </div>
-    
-</div>
-
-
-                
-                    <!-- Paradox Post Info -->
-                    
-                
-
-                <!-- Post Comments -->
-                
-                    
                 
             </div>
+            <hr/>
 
-            <!-- Post Prev & Next Nav -->
-            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <!-- Prev Nav -->
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Lary Zhang</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://example.com/2020/11/16/ReentrantLock/">http://example.com/2020/11/16/ReentrantLock/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Lary Zhang</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
     
 
-    <!-- Section Spacer -->
-    <div class="section-spacer"></div>
-
-    <!-- Next Nav -->
     
-        <a href="/2020/11/15/hello-world/" id="post_nav-older" class="next-content">
-            Older
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_forward</i>
-            </button>
-        </a>
-    
-</nav>
 
+</div>
+
+                </div>
+            </div>
+            
         </div>
     </div>
 
-
-
-                    
-
-                    
-
-                    <!--Footer-->
-<footer class="mdl-mini-footer" id="bottom">
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/11/16/ReentrantLock/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        
+                        <span class="card-title"></span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-16
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Lary Zhang
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/11/16/ReentrantLock/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        
+                        <span class="card-title"></span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-16
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Lary Zhang
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2020</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">Lary Zhang</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/learn1ngfun" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:ztfhelloworld@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2811455548" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2811455548" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
 </footer>
 
-
-                    <!-- Import JS File -->
-
-    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+<div class="progress-bar"></div>
 
 
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
 
-    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
 
-
-
-    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
-
-
-<script type="text/ls-javascript" id="NProgress-script">
-    NProgress.configure({
-        showSpinner: true
-    });
-    NProgress.start();
-    $('#nprogress .bar').css({
-        'background': '#29d'
-    });
-    $('#nprogress .peg').css({
-        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
-    });
-    $('#nprogress .spinner-icon').css({
-        'border-top-color': '#29d',
-        'border-left-color': '#29d'
-    });
-    setTimeout(function() {
-        NProgress.done();
-        $('.fade').removeClass('out');
-    }, 800);
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- UC Browser Compatible -->
-<script>
-	var agent = navigator.userAgent.toLowerCase();
-	if(agent.indexOf('ucbrowser')>0) {
-		document.write('
-<link rel="stylesheet" href="/css/uc.css">
-');
-	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
-	}
-</script>
-
-<!-- Import prettify js  -->
-
-
-
-<!-- Window Load -->
-<!-- add class for prettify -->
-<script type="text/ls-javascript" id="window-load">
-    $(window).on('load', function() {
-        // Post_Toc parent position fixed
-        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
-    });
-
-    
-    
-</script>
-
-<!-- MathJax Load-->
-
-
-<!-- Bing Background -->
-
-
-<script type="text/ls-javascript" id="lazy-load">
-    // Offer LazyLoad
-    queue.offer(function(){
-        $('.lazy').lazyload({
-            effect : 'show'
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
         });
-    });
+    };
 
-    // Start Queue
-    $(document).ready(function(){
-        setInterval(function(){
-            queue.execNext();
-        },200);
-    });
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
 </script>
 
-<!-- Custom Footer -->
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
 
 
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
 
 <script>
-    (function(){
-        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
-
-        for (var i = 0; i < scriptList.length; ++i) {
-            var item = scriptList[i];
-            lsloader.runInlineScript(item.id,item.id);
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
         }
-    })()
-console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
 </script>
 
-                </main>
-            </div>
-        <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
     
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
 </html>
