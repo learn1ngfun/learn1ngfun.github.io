@@ -29,8 +29,8 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><link rel="alternate" href="/atom.xml" title="ZTF" type="application/atom+xml">
-</head>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="ZTF" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -465,7 +465,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="重入锁-ReentrantLock-源码浅析（一）"><a href="#重入锁-ReentrantLock-源码浅析（一）" class="headerlink" title="重入锁 ReentrantLock 源码浅析（一）"></a>重入锁 ReentrantLock 源码浅析（一）</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java 除了使用关键字 synchronized 外，还使用了 ReentrantLock 实现独占锁的功能。相较于 synchronized，ReentrantLock 更为丰富和灵活，并且可重入。除此之外，我们或多或少还听说过一个名词 AQS。AQS 是Java 提供的底层同步工具，用一个 int 类型的变量表示同步状态，提供一系列的 CAS 操作来管理这个同步状态。我们今天的主角 ReentrantLock 也是基于 AQS 实现的。好的，废话少说，我们开始源码的探索路程。</p>
+                <h2 id="重入锁-ReentrantLock-源码浅析（一）"><a href="#重入锁-ReentrantLock-源码浅析（一）" class="headerlink" title="重入锁 ReentrantLock 源码浅析（一）"></a>重入锁 ReentrantLock 源码浅析（一）</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java 除了使用关键字 synchronized 外，还使用了 ReentrantLock 实现独占、可重入锁的功能。相较于 synchronized，ReentrantLock 更为丰富和灵活。除此之外，我们或多或少还听说过一个名词 AQS。AQS 是Java 提供的底层同步工具，用一个 int 类型的变量表示同步状态，提供一系列的 CAS 操作来管理这个同步状态。我们今天的主角 ReentrantLock 也是基于 AQS 实现的。好的，废话少说，我们开始源码的探索路程。</p>
 <h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;首先啊，我们打开源码就看到了 ReentrantLock 实现了 Lock 接口，那么 Lock 里面的一些加锁啊解锁啊等方法自然也要一一实现。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ReentrantLock</span> <span class="token keyword">implements</span> <span class="token class-name">Lock</span><span class="token punctuation">,</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>Serializable </code></pre>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其实ReentrantLock 就一个属性，那就是 sync。但 ReentrantLock 自己实现了一个 Sync 的静态内部类。这个 Sync 继承了 AbstractQueuedSynchronizer，也就是我们常说的 AQS。所以 AQS 中的一些重要属性自然而然也被ReentrantLock 继承。</p>
