@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
-    <url>/2020/11/16/ReentrantLock/</url>
-    <content><![CDATA[<h2 id="重入锁-ReentrantLock-源码浅析（一）"><a href="#重入锁-ReentrantLock-源码浅析（一）" class="headerlink" title="重入锁 ReentrantLock 源码浅析（一）"></a>重入锁 ReentrantLock 源码浅析（一）</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java 除了使用关键字 synchronized 外，还使用了 ReentrantLock 实现独占、可重入锁的功能。相较于 synchronized，ReentrantLock 更为丰富和灵活。除此之外，我们或多或少还听说过一个名词 AQS。AQS 是Java 提供的底层同步工具，用一个 int 类型的变量表示同步状态，提供一系列的 CAS 操作来管理这个同步状态。我们今天的主角 ReentrantLock 也是基于 AQS 实现的。好的，废话少说，我们开始源码的探索路程。</p>
+    <title>重入锁 ReentrantLock 源码浅析（一）</title>
+    <url>/2020/12/12/ReentrantLock/</url>
+    <content><![CDATA[<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java 除了使用关键字 synchronized 外，还使用了 ReentrantLock 实现独占、可重入锁的功能。相较于 synchronized，ReentrantLock 更为丰富和灵活。除此之外，我们或多或少还听说过一个名词 AQS。AQS 是Java 提供的底层同步工具，用一个 int 类型的变量表示同步状态，提供一系列的 CAS 操作来管理这个同步状态。我们今天的主角 ReentrantLock 也是基于 AQS 实现的。好的，废话少说，我们开始源码的探索路程。</p>
 <h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;首先啊，我们打开源码就看到了 ReentrantLock 实现了 Lock 接口，那么 Lock 里面的一些加锁啊解锁啊等方法自然也要一一实现。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ReentrantLock</span> <span class="token keyword">implements</span> <span class="token class-name">Lock</span><span class="token punctuation">,</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>Serializable </code></pre>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其实ReentrantLock 就一个属性，那就是 sync。但 ReentrantLock 自己实现了一个 Sync 的静态内部类。这个 Sync 继承了 AbstractQueuedSynchronizer，也就是我们常说的 AQS。所以 AQS 中的一些重要属性自然而然也被ReentrantLock 继承。</p>
@@ -42,14 +42,14 @@
          * method enq to add new wait node.
          */</span>
         <span class="token comment" spellcheck="true">/** 阻塞队列的尾节点 */</span>
-            <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token keyword">volatile</span> Node tail<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">transient</span> <span class="token keyword">volatile</span> Node tail<span class="token punctuation">;</span>
 
         <span class="token comment" spellcheck="true">/**
          * The synchronization state.
          */</span>
         <span class="token comment" spellcheck="true">// 表示资源</span>
         <span class="token comment" spellcheck="true">// 独占模式：0 表示未加锁状态，>0 表示加锁状态</span>
-            <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> state<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> state<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ReentrantLock 里面需要用到的属性就大致讲完了，其实还有一个状态码为 0 的，它代表当前节点是新建的节点。哦，对了，AbstractQueuedSynchronizer 还继承了一个抽象类 AbstractOwnableSynchronizer，里面的exclusiveOwnerThread 属性及其 get、set 方法也是重点对象。</p>
 <pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 独占锁模式：表示当前独占锁线程</span>
@@ -152,7 +152,7 @@
     <span class="token function">enq</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> node<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其实，addWaiter 方法无非就是将当前线程封装成 node节点加入到阻塞队列队尾中。如果一切进展顺利即上面所说的“快速入队”。如果中间出现阻塞队列为空队列或者 cas 插入队尾失败的情况则进入完整入队。接下来我们分析一下完整入队 enq()</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其实，addWaiter 方法无非就是将当前线程封装成 node节点加入到阻塞队列队尾中。如果一切进展顺利即上面所说的“快速入队”。如果中间出现阻塞队列为空队列或者 cas 插入队尾失败的情况则进入完整入队。接下来我们分析一下完整入队 enq()。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> Node <span class="token function">enq</span><span class="token punctuation">(</span><span class="token keyword">final</span> Node node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment" spellcheck="true">/** 自旋入队，只有当前 node 入队成功后，才会跳出循环*/</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -184,10 +184,10 @@
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;完全入队也很好理解，其实就是主要解决 addWaiter 没有入队成功的情况。如果你是因为空队列入队失败，那么我们就自己创建一个头节点，如果你是由于 cas 竞争入队失败，那么我们就自选入队直至成功。</p>
 <p>接下来是 acquireQueued() 了，我个人认为这个方法有点烦的，我会尽量复述清楚。</p>
 <p>这里先简单梳理一下 acquireQueued 的骨架。</p>
-<p>acquireQueued</p>
-<p>​        |–&gt; shouldParkAfterFailedAcquire</p>
-<p>​        |–&gt; parkAndCheckInterrupt</p>
-<p>​        | –&gt; cancelAcquire</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;acquireQueued</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|–&gt; shouldParkAfterFailedAcquire</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|–&gt; parkAndCheckInterrupt</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| –&gt; cancelAcquire</p>
 <p>acquireQueued 做了什么呢？</p>
 <ol>
 <li>当前节点是否有被 park？ 没有，那么就挂起。</li>
@@ -278,6 +278,13 @@
 <p>③ 进入 acquire 我们首先要尝试拿到锁（tryAcquire）,怎么去尝试拿到锁呢？我们先是获取当前线程，通过当前线程获取当前线程的状态值（state），如果状态值为 0，说明现在是无锁状态。然后判断当前线程前面有没有线程在等待（hasQueuedPredecessors），如果没有那么就通过 cas 的方式去设置 state值（compareAndSetState）。如果设置 state 值成功了，说明我们抢占锁成功了。把当前线程设置成独占者线程（setExclusiveOwnerThread），然后就返回 true 了。如果锁重入了呢，更新 state 值，再次设置新的 state，最后返回 true;</p>
 <p>④ 如果没有拿到锁，那么我们会将当前线程封装成一个 Node 节点，然后将这个节点添加到阻塞队列中。</p>
 <p>⑤进入到阻塞队列中我们还要看看当前线程是否是 park 状态，如果不是那么就将其挂起。并且唤醒线程的逻辑也在这个方法里。但唤醒的逻辑要下次再讲。到此整个加锁的过程全部完成。</p>
+<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>以上文献资料来自 B 站 ”<strong>小刘思源码</strong>“，在此感谢小刘老师。</p>
 ]]></content>
+      <categories>
+        <category>AQS</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
   </entry>
 </search>
