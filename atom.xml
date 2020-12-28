@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2020-12-26T09:11:57.467Z</updated>
+  <updated>2020-12-28T21:39:18.135Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>面试题</title>
+    <link href="http://example.com/2020/12/29/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://example.com/2020/12/29/%E9%9D%A2%E8%AF%95%E9%A2%98/</id>
+    <published>2020-12-28T21:34:42.000Z</published>
+    <updated>2020-12-28T21:39:18.135Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-Spring-事务（20201229）"><a href="#1-Spring-事务（20201229）" class="headerlink" title="1. Spring 事务（20201229）"></a>1. Spring 事务（20201229）</h3><h4 id="1-1-Spring-事务中的隔离级别有哪几种？"><a href="#1-1-Spring-事务中的隔离级别有哪几种？" class="headerlink" title="1.1 Spring 事务中的隔离级别有哪几种？"></a>1.1 Spring 事务中的隔离级别有哪几种？</h4><ul><li>TransactionDefinition.ISOLATION_DEFAULT：使用后端数据库默认的隔离级别，Mysql 默认采用 REPEATABLE_READ 隔离级别，Oracle 默认采用的 READ_COMMITTED 隔离级别。</li><li>TransactionDefinition.ISOLATION_READ_UNCOMMITTED：最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、欢度或不可重复读</li><li>TransactionDefinition.ISOLATION_READ_COMMITTED：允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复度仍可能发生</li><li>TransactionDefinition.ISOLATION_REPEATABLE_READ：对同一字段的多次读取结果都是一致的，除非数据本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。</li><li>TransactionDefinition.ISOLATION_SERIALIZABLE：最高的隔离级别，完全服从 ACID 的隔离级别。所有的事务依次逐个执行，这样事物之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。但是这样将严重影响程序的性能。通常情况下也不会用到该级别。</li></ul><h4 id="1-2-Spring-事务传播机制类型"><a href="#1-2-Spring-事务传播机制类型" class="headerlink" title="1.2 Spring 事务传播机制类型"></a>1.2 Spring 事务传播机制类型</h4><p>① PROPAGATION_REQUIRED</p><ul><li>支持当前事务，如果当前没有事务，则新建事务</li><li>如果当前存在事务，则加入当前事务，合并成一个事务</li></ul><p>② REQUIRES_NEW</p><ul><li>新建事务，如果当前存在事务，则把当前事务挂起</li><li>不受调用者的事物影响，父级异常，它也是正常提交</li></ul><p>③ SUPPORTS</p><ul><li>如果当前存在事务，则加入事务</li><li>不存在事务，则以非事务方式运行</li></ul><p>④ NOT_SUPPORTED</p><ul><li>以非事务方式运行</li><li>如果当前存在事务，则把当前事务挂起</li></ul><p>⑤ MANDATORY</p><ul><li>如果当前存在事务，则运行在当前事务中</li><li>如果当前无事务，则抛出异常，即父级方法必须有事务</li></ul><p>⑥ NEVER</p><ul><li>以非事务方式运行，如果当前存在事务，则抛出异常，即父级方法必须无事务</li></ul><p>⑦ NESTED</p><ul><li><p>如果当前存在事务，他会将成为父级事物的一个子事务，方法结束后并没有提交，只有等父事务结束了才提交</p></li><li><p>如果当前没事务，则新建事务</p></li><li><p>如果它异常，父级可以捕获它的异常而不进行混滚，正常提交</p></li></ul><p>参考：<a href="https://segmentfault.com/a/1190000020386113?utm_source=tag-newest">https://segmentfault.com/a/1190000020386113?utm_source=tag-newest</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;1-Spring-事务（20201229）&quot;&gt;&lt;a href=&quot;#1-Spring-事务（20201229）&quot; class=&quot;headerlink&quot; title=&quot;1. Spring 事务（20201229）&quot;&gt;&lt;/a&gt;1. Spring 事务（20201229）</summary>
+      
+    
+    
+    
+    <category term="面试题" scheme="http://example.com/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    
+    
+    <category term="面试题" scheme="http://example.com/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis 持久化</title>
