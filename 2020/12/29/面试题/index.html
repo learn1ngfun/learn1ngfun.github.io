@@ -532,6 +532,18 @@
 <li>端口：HTTP 的 URL 由 “http://” 其实且默认使用端口 80，而 HTTPS 的 URL 由“https://” 起始且默认使用端口 443。</li>
 <li>安全性和资源消耗： HTTP 协议运行在 TCP 之上，所有传输内容都是明文，客户端和服务器端都是无法验证对方身份。HTTPS 是运行在 SSL/TLS 之上的 HTTP 协议，SSL/TLS 运行在 TCP 之上。所有传输的内容都是经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行非对称加密。所以说，HTTP 安全性没有 HTTPS 高，但是 HTTPS 比 HTTP耗费更多服务器资源。</li>
 </ol>
+<h3 id="4-Redis-的过期淘汰策略"><a href="#4-Redis-的过期淘汰策略" class="headerlink" title="4. Redis 的过期淘汰策略"></a>4. Redis 的过期淘汰策略</h3><p>1）全局的键空间选择性移除</p>
+<ul>
+<li>noeviction：当内存不足以容纳新写入数据时，新写入操作会报错。</li>
+<li>llkey-lru：在键空间中，移除最近最少使用的 key。</li>
+<li>llkey-random：在键空间中，随机移除某个 key。</li>
+</ul>
+<p>2）设置过期时间的键空间选择性移除</p>
+<ul>
+<li>volatile-lru：在设置了过期时间的键空间中，移除最近最少使用的 key</li>
+<li>olatile-random：在设置了过期时间的键空间中，随机移除某个 key</li>
+<li>volatile-ttl：在设置了过期时间的键空间中，有更早过期时间的 key 优先移除</li>
+</ul>
 
                 
             </div>
