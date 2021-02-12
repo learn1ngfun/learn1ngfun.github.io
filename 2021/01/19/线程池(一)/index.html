@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="主从复制, ZTF">
+    <meta name="keywords" content="线程池（一）, ZTF">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>主从复制 | ZTF</title>
+    <title>线程池（一） | ZTF</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/zcfz.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/threadpool1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">主从复制</h1>
+                    <h1 class="description center-align post-title">线程池（一）</h1>
                 </div>
             </div>
         </div>
@@ -432,8 +432,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                                <span class="chip bg-color">数据库</span>
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
                             </a>
                         
                     </div>
@@ -444,8 +444,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Redis/" class="post-category">
-                                Redis
+                            <a href="/categories/%E7%BA%BF%E7%A8%8B/" class="post-category">
+                                线程
                             </a>
                         
                     </div>
@@ -457,7 +457,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-01-01
+                    2021-01-19
                 </div>
                 
 
@@ -478,66 +478,100 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="什么是主从复制"><a href="#什么是主从复制" class="headerlink" title="什么是主从复制"></a>什么是主从复制</h3><p>将一台 Redis 主服务器上的数据复制到其他的从服务器上。前者称为主节点（master），后者称为从节点（slave），数据的复制时单向的，只能从主节点复制到从节点。</p>
-<p>为什么需要主从复制功能呢？</p>
-<p>1）读写分离</p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天我们聊一下线程池，聊线程池前我们应该知道为什么用线程池。我们的程序几乎都是面向大众的，每个功能可能在某一时间段不止一个人在使用。我们也希望一个功能可以同时满足多个人的需求。就像回复消息一样，你以为你的女神只回复你一个人消息，其实你只是她池塘里的一条鱼而已，在回复你时，人家已经给其他“备胎” 发了消息。这样是不是理解了。但是频繁创建销毁线程是很消耗资源的，所以我们需要对资源进行反复利用；线程池还可以防止内存溢出，我们通过设置线程池的大小让线程池有了处理线程能力的边界，从而也保护了程序。于是线程池的概念就诞生了。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;常用的线程池的提交方式有两种，分别为 execute 和 submit，submit 底层调用的 execute。submit 可以提交 callable 和 runnable 类型的参数，它会将参数封装成 FutureTask 的进行提交，然后通过 Future 可以 get 获取线程执行结果。而 execute 只能提交 runnable 类型的参数。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;众所周知，线程池一共有 5 种，其中 2 种为定时类型的，不是我们这次讨论的目标。这次主要探讨另三种，分别为 newFixedThreadPool，newSingleThreadExecutor 和 newSingleThreadExecutor。而通过源码我们可以发现这一系列线程池都是套娃 ThreadPoolExecutor 方法的。所以搞清楚 ThreadPoolExecutor 才是弄懂线程池的关键。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;但是对于 ThreadPoolExecutor 源码的讨论我们先放到后面，主要先看一下这三种线程池的运行效率，顺便科普一下线程池的简单应用。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThreadPoolDemo</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ExecutorService es1 <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ExecutorService es2 <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ExecutorService es3 <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            es1<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MyTask</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//es2.execute(new MyTask(i));</span>
+            <span class="token comment" spellcheck="true">//es3.execute(new MyTask(i));</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">MyTask</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">MyTask</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>i <span class="token operator">=</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大家可以在自己的电脑上试一下，你会发现在这三种线程池中 newCachedThreadPool 效率是最快的，其次是 newFixedThreadPool，最后是 newCachedThreadPool。那么为什么会这样呢，我们可以看一下源码。</p>
+<h4 id="newCachedThreadPool"><a href="#newCachedThreadPool" class="headerlink" title="newCachedThreadPool"></a>newCachedThreadPool</h4><pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token function">ThreadPoolExecutor</span><span class="token punctuation">(</span><span class="token keyword">int</span> corePoolSize<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//核心线程数限制</span>
+                              <span class="token keyword">int</span> maximumPoolSize<span class="token punctuation">,</span><span class="token comment" spellcheck="true">//最大线程限制</span>
+                              <span class="token keyword">long</span> keepAliveTime<span class="token punctuation">,</span><span class="token comment" spellcheck="true">// 空闲线程存活时间</span>
+                              TimeUnit unit<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// 时间单位</span>
+                              BlockingQueue<span class="token operator">&lt;</span>Runnable<span class="token operator">></span> workQueue<span class="token punctuation">,</span><span class="token comment" spellcheck="true">// 任务队列</span>
+                              ThreadFactory threadFactory<span class="token punctuation">,</span><span class="token comment" spellcheck="true">// 线程工程</span>
+                              RejectedExecutionHandler handler<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">// 拒绝策略    </span>
+
+     <span class="token keyword">public</span> <span class="token keyword">static</span> ExecutorService <span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">,</span>
+                                    60L<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">,</span>
+                                    <span class="token keyword">new</span> <span class="token class-name">SynchronousQueue</span><span class="token operator">&lt;</span>Runnable<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过源代码我们可以看出 newCachedThreadPool 的 核心线程数为 0，最大线程数为 Integer.MAX_VALUE（即 2^31 - 1 = 2147483647，21亿多，没有哪台机器可以承受吧，所以可以理解为不受限制），然后线程的生命时长为 60s 重点是任务队列为 BlockingQueue。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;那么这里简单介绍一下 BlockingQueue。SynchronousQueue是一个不存储元素的队列。每一个put操作必须等待一个take操作，否则不能继续添加元素。也就是说一次只能处理一个线程，那么它几乎就不占用内存。接下来我画了张图。</p>
+<img src="/images/threadpool1/newCachedThreadPool.png" style="zoom:30%;">
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如图我们可以看出，线程池中的所有线程都是在非核心线程区创建的（由于核心线程区为 0），相当于假如我有100份工作，而我又能找到 100 个工人帮我去做，那么很快就可以完成，所以 newCachedThreadPool 比较快。而我们又知道，线程数和 cpu 息息相关。由于创建线程没有限制，那么所有的线程都在非核心线程区创建，CPU 会消耗大量性能去创建线程，所以 newCachedThreadPool 极有可能造成 CPU 100%。</p>
+<p>我们接下来看一看 newFixedThreadPool。</p>
+<h4 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool"></a>newFixedThreadPool</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> ExecutorService <span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token keyword">int</span> nThreads<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span>nThreads<span class="token punctuation">,</span> nThreads<span class="token punctuation">,</span> 
+                                  0L<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">,</span>
+                                  <span class="token keyword">new</span> <span class="token class-name">LinkedBlockingQueue</span><span class="token operator">&lt;</span>Runnable<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;核心线程数和最大线程数都是传入参数，空闲线程存活时间为 0s（keepAliveTime 为非核心线程使用完后会多久回收，由于这里没有设置非核心线程数，所以线程使用完不回收。），注意这个任务队列为 LinkedBlockingQueue。LinkedBlockingQueue 内部基于链表来存放元素，它如果不指定容量，默认为 Integer.MAX_VALUE，也就是无界队列。（通常用的时候会设置大小，而这里没设置，为默认值。）。所以我们知道为什么第二个例子会比第一个慢了吧，第一个是用 100 个线程去完成任务，而第二个只创建了 10 个。但是 newFixedThreadPool 也有个问题，由于没有设置 LinkedBlockingQueue 的初始大小，所以它会无限大，极有可能会造成 OOM。</p>
+<img src="/images/threadpool1/newFixedThreadPool.png" style="zoom:30%;">
+
+<p>接下来我们看一下 newSingleThreadExecutor。</p>
+<h4 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor"></a>newSingleThreadExecutor</h4><pre class=" language-java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">static</span> ExecutorService <span class="token function">newSingleThreadExecutor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">FinalizableDelegatedExecutorService</span>
+      <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                              0L<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">,</span>
+                              <span class="token keyword">new</span> <span class="token class-name">LinkedBlockingQueue</span><span class="token operator">&lt;</span>Runnable<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;除了核心线程数和最大线程数为 1 以外，其他的和 newFixedThreadPool 一样。也就是说它是一个任务一个任务的进行，所以 newSingleThreadExecutor 是三个里最慢的。当然了，newSingleThreadExecutory 依然有发生 OOM 的问题。</p>
+<p>你可能会发现，官方提供的方法都有问题，我们看一下阿里的开发手册是怎么说的。</p>
+<img src="/images/threadpool1/ali.png">
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;里面说的“通过 ThreadPoolExecutor” 的方式即<strong>自定义线程池</strong>。也是我们在面试中常遇见的一道面试题：“请说一下自定义线程池中参数的含义”。那七个我已经在上面 ThreadPoolExecutor 构造函数里标注了注释，详细内容下一篇总结线程源码时会说的。粗略地写一个和朋友交流，他们用到自定义线程池的配置吧。</p>
+<pre class=" language-java"><code class="language-java"> ThreadPoolExecutor pool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span><span class="token comment" spellcheck="true">// 自定义一个线程池</span>
+                <span class="token number">1</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// coreSize</span>
+                <span class="token number">4</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// maxSize</span>
+                <span class="token number">60</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// 60s</span>
+                TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">,</span> 
+                               <span class="token keyword">new</span> <span class="token class-name">ArrayBlockingQueue</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span> 
+                <span class="token punctuation">,</span> Executors<span class="token punctuation">.</span><span class="token function">defaultThreadFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor<span class="token punctuation">.</span>AbortPolicy</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="拒绝策略"><a href="#拒绝策略" class="headerlink" title="拒绝策略"></a>拒绝策略</h3><p>当请求任务不断的过来，而系统此时又处理不过来的时候，我们需要采取的策略是拒绝服务。RejectedExecutionHandler接口提供了拒绝任务处理的自定义方法的机会。在ThreadPoolExecutor中已经包含四种处理策略。</p>
 <ul>
-<li><p>读操作：主库、从库都可以接受；</p>
-</li>
-<li><p>写操作：首先到主库执行，然后主库将写操作同步给从库</p>
-</li>
+<li>AbortPolicy策略：该策略会直接抛出异常，阻止系统正常工作。</li>
+<li>CallerRunsPolicy 策略：只要线程池未关闭，该策略直接在调用者线程中，运行当前的被丢弃的任务。</li>
+<li>手写</li>
+<li>DiscardPolicy策略：该策略默默的丢弃无法处理的任务，不予任何处理。</li>
 </ul>
-<p>​       这样可以提升 Redis 的服务能力。</p>
-<p>2）数据容灾</p>
-<p>​       由于从服务器与主服务器数据保持同步，一旦主服务器宕机，可以立即请求切换到从服务器，从而避免 Redis服务中断。</p>
-<h4 id="主从库同步"><a href="#主从库同步" class="headerlink" title="主从库同步"></a>主从库同步</h4><p>想了解主从库一致的问题，我们首先还要从主从库间第一次同步入手。</p>
-<p>当我们启动多个 Redis 实例的时候，我们可以通过 <strong>replicaof</strong>（Redis 5.0 之前使用 slaveof）命令形成主库和从库的关系。</p>
-<p>例如，现在有实例 1（172.16.19.3:6379）和 实例 2（172.16.19.5:7000），我们在实例 2 上执行以下命令后，实例 2 就变成了实例 1 的从库，并从实例 1 上复制数据。</p>
-<blockquote>
-<p>172.16.19.5:7000&gt; REOLICAOF  172.16.19.3  6379</p>
-<p>OK</p>
-</blockquote>
-<p>接下来我们就要学习主从库间数据第一次同步的三个阶段。</p>
-<img src="/images/redis/redis2/1.png">    
-
-<p><strong>第一阶段</strong>,是主从库间建立连接、协商同步的过程，主要是为全量复制做准备。在这一步，从库和主库建立起连接，并告诉主库即将进行同步，主库确认回复后，主从库间就可以开始同步了。</p>
-<p>具体来说，从库给主库发送 psync 命令，表示要进行数据同步，主库根据这个命令的参数来启动复制。psync 命令包含了主库 runID 和复制进度 offset 两个参数。</p>
-<ul>
-<li>runID，是每个 Redis 实例启动时都会自动生成一个随机 ID，用来唯一标记这个实例。当从库和主库第一次复制时，因为不知道主库的 runID，所以将 runID 设为 “？”。</li>
-<li>offset，此时设置为 -1，表示第一次复制。</li>
-</ul>
-<p><strong>第二阶段</strong>  ，主库将所有数据同步给从库。从库收到数据后，在本地完成数据加载。这个过程依赖于内存快照生成的 RDB 文件。</p>
-<p><strong>第三个阶段</strong>，主库会把第二阶段执行过程中新收到的写命令，再发给从库。具体的操作是，当主库完成 RDB 文件发送后，就会把此时 replication buffer 中的修改操作发送给从库，从库再重新执行这些操作。这样一来，主从库就实现同步了。  </p>
-<p>扩展一下，主库执行 bgsave 命令，生成 RDB 文件，接着将文件发送给从库。但是这个持久化操作（bgsave）是一个非常消耗资源的操作，如果主服务器和从服务器之间发生了时间较短的网络连接故障。恢复后，从服务器会重新连接到主服务器，并发送 sync 命令请求同步数据。这时候主服务器还需要进行全量持久化操作吗？显然是不需要。因此在 Redis 2.8 提出了新的主从复制解决方案。</p>
-<ul>
-<li>从服务器会记录已经从主服务器接收到的数据量（复制偏移量 offset）。</li>
-<li>主服务器会维护一个复制缓冲区，记录自己已执行且待发送给从服务器的命令请求，同时还需要记录复制缓冲区起一个字节的复制偏移量。</li>
-</ul>
-<p>当从服务器连接到主服务器时会发送 psync 命令请求同步数据，主服务器判断该复制偏移量是否还包含在复制缓冲区；如果包含，则不需要执行持久化操作，直接向从服务器请发送复制缓冲区命令请求即可，这称为部分重同步；如果不包含，则需要执行持久化操作，同时将所有新执行的写命令缓存在复制缓冲区中，并重置复制缓冲区第一个字节的复制偏移量，这称为完整重同步。</p>
-<h3 id="主-从-从-模式"><a href="#主-从-从-模式" class="headerlink" title="主-从-从 模式"></a>主-从-从 模式</h3><p>从上文你可以看到，一次全量复制中，对于主库来说。需要完成两个耗时的操作：生成RDB文件和传输RDB文件。如果从库数量很多，而且都要和主库进行全量复制的话，就会导致主库忙于fork子进程生成RDB文件，进行数据全量同步。fork这个操作会阻塞主线程处理正常请求，从而导致主库响应应用程序的请求速度变慢。因此，我们通过<strong>“主- 从-从 模式”</strong>将主库生成RDB和传输RDB的压力，以级联的方式分散到数据库上。</p>
-<blockquote>
-<p>replicaof   所选从库的 IP  所选从库的端口号</p>
-</blockquote>
-<p>其实说白了就是给从库选择从库，这样一来这些从库就会知道，在进行同步时，不用再和主库进行交互了，只要和级联的从库进行写操作同步就行了，这样就可以减轻主库上的压力，如下图所示：</p>
-<img src="/images/redis/redis2/2.png" style="zoom:30%;">    
-
-
-
-<h3 id="主从库之间网络断了怎么办？"><a href="#主从库之间网络断了怎么办？" class="headerlink" title="主从库之间网络断了怎么办？"></a><strong>主从库之间网络断了怎么办？</strong></h3><p>在Redis2.8之前。如果主库在命令传播时出现了网络闪断，那么从库会和主库进行一次全量复制，开销很大。</p>
-<p>从Redis2.8开始，网络断了之后，主从库会采取用增量复制的方式继续同步，增量复制只会把主从网络断连期间主库收到的命令同步给从库。</p>
-<p>当主从库断连后，主库会把断连期间收到的写操作命令，写入 replication buffer，同时也会把这些写操作命令也写入 repl_backlog_buffer这个缓冲区。repl_backlog_buffer是一个环形缓冲区，主库会记录自己写到的位置，从库则会记录自己已经读到的位置。</p>
-<p>刚开始的时候，主库和从库的写读位置在一起，这算他们的起始位置。随着主库不断接受新的写操作，他在缓冲区中的写位置会逐步偏离起始位置，我们通常用偏移量来衡量这个偏移距离的大小，对主库来说对应的偏移量就是master_repl_offset。主库接受的新写操作越多，这个值就会越大。<br>同样，从库在复制完写操作命令后，他在缓冲区的读位置也开始逐渐偏移刚才的起始位置，此时，从库已复制的偏移量slave_repl_offset也在不断增加。正常情况下，这两个偏移量基本相等。</p>
-<img src="/images/redis/redis2/3.png" style="zoom:50%;">    
-
-<p>主从库的连接恢复之后，从库首先会给主库发送psync命令，并把自己当前的slave_repl_offset发给主库，主库会判断自己的master_repl_offset发给主库，主库会判断自己的master_repl_offset和slave_repl_offset之间的差距。</p>
-<p>在网络断连阶段，主库可能会收到新的写操作命令，所以，一般来说，master_repl_offset会大于slave_repl_offset和master_repl_offset之间的命令操作同步给从库就行。</p>
-<p>不过，还有个地方需要强调一下，因为repl_backlog_buffer是一个环形缓冲区，所以在缓冲区写满后，主库会继续写入，此时，就会覆盖掉之前写入的操作。如果从库的读取速度比较慢，就有可能导致从库还没读取的操作被主库新的写操作覆盖了，这就会导致主从库间的数据不一致。因此我们要想办法避免这一情况，一般而言，我们可以调整repl_bacjlog_size这个参数。这个参数和所需的缓冲空间大小有关。缓冲空间的计算公式是：<strong>缓冲空间大小=主库写入命令速度 * 操作大小-主从库间网络传输命令速度 * 操作大小</strong>。再实际应用中，考虑到可能存在一些突发请求压力，我们通常需要把这个缓冲空间扩大一倍，即 <u>repl_backlog_size = 缓冲空间大小 * 2</u>，这也就是repl_bavklog_size的最终值。</p>
-<p>举个例子，如果主库每秒写入 2000 个操作，每个操作的大小为 2KB，网络每秒能传输 1000 操作，那么，有 1000 个操作需要缓冲起来，这就至少需要 2MB 的缓冲空间。否则，新写的命令就会覆盖到旧操作了。为了应付可能的突发压力，我们最终把 repl_backlog_size 设为 4MB。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本篇主要讲解了主从复制的概念与原理，还引入“主-从-从”的概念和断网后 Redis 如何操作。相信大家对主从复制有可较深的印象，接下来会继续补充和收集关于一致性、哨兵和集群等方面的知识，希望大家能够喜欢。如果后续有时间或者需要我会将主从的源码补充。</p>
-<p>祝大家 2021 新年快乐！！</p>
-<p>最后文章的资料来源：</p>
-<p>​                                                                                                                            极客时间—-《Redis 核心技术与实战》</p>
-<p>​                                                                                                                    《Redis 5设计与源码分析》—- 陈雷 等编著</p>
+<p>除了JDK默认提供的四种拒绝策略，我们可以根据自己的业务需求去自定义拒绝策略，自定义的方式很简单，直接实现RejectedExecutionHandler接口即可。 </p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>这篇文章其实有点怪，但是没办法，因为我下一把篇会讲源码，所以有好多点一笔带过了。线程池（二）马上献上。</p>
 
                 
             </div>
@@ -564,7 +598,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/01/01/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">http://example.com/2021/01/01/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/</a>
+                    <a href="http://example.com/2021/01/19/%E7%BA%BF%E7%A8%8B%E6%B1%A0(%E4%B8%80)/">http://example.com/2021/01/19/%E7%BA%BF%E7%A8%8B%E6%B1%A0(%E4%B8%80)/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -602,8 +636,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                                    <span class="chip bg-color">数据库</span>
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
                                 </a>
                             
                         </div>
@@ -651,7 +685,55 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/01/11/Future%E7%9A%84%E5%89%AF%E6%9C%AC/">
+                <a href="/2021/02/11/%E6%89%8B%E5%86%99HashMap/">
+                    <div class="card-image">
+                        
+                        <img src="/medias/featureimages/hashmap.jpg" class="responsive-img" alt="手写HashMap">
+                        
+                        <span class="card-title">手写HashMap</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-11
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%89%8B%E5%86%99/" class="post-category">
+                                    手写
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/01/11/Future/">
                     <div class="card-image">
                         
                         <img src="/medias/featureimages/future.jpg" class="responsive-img" alt="Future 源码浅析">
@@ -666,9 +748,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -686,54 +768,6 @@
                     
                     <a href="/tags/Java/">
                         <span class="chip bg-color">Java</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/12/29/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                    <div class="card-image">
-                        
-                        <img src="/medias/featureimages/interview.jpg" class="responsive-img" alt="面试题">
-                        
-                        <span class="card-title">面试题</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-29
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-category">
-                                    面试题
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
-                        <span class="chip bg-color">面试题</span>
                     </a>
                     
                 </div>

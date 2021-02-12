@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="线程池（一）, ZTF">
+    <meta name="keywords" content="生日快乐, ZTF">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>线程池（一） | ZTF</title>
+    <title>生日快乐 | ZTF</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -311,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/threadpool1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/27.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">线程池（一）</h1>
+                    <h1 class="description center-align post-title">生日快乐</h1>
                 </div>
             </div>
         </div>
@@ -432,8 +432,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Java/">
-                                <span class="chip bg-color">Java</span>
+                            <a href="/tags/%E6%B0%B4%E6%96%87/">
+                                <span class="chip bg-color">水文</span>
                             </a>
                         
                     </div>
@@ -444,8 +444,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%BA%BF%E7%A8%8B/" class="post-category">
-                                线程
+                            <a href="/categories/%E6%B0%B4/" class="post-category">
+                                水
                             </a>
                         
                     </div>
@@ -457,7 +457,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-01-23
+                    2021-02-13
                 </div>
                 
 
@@ -478,89 +478,15 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id><a href="#" class="headerlink" title></a></h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;众所周知，线程池一共有 5 种，其中 2 种为定时类型的，不是我们这次讨论的目标。这次主要探讨另三种，分别为 newFixedThreadPool，newSingleThreadExecutor 和 newSingleThreadExecutor。而通过源码我们可以发现这一系列线程池都是套娃 ThreadPoolExecutor 方法的。所以搞清楚 ThreadPoolExecutor 才是弄懂线程池的关键。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;但是对于 ThreadPoolExecutor 源码的讨论我们先放到后面，主要先看一下这三种线程池的运行效率，顺便科普一下线程池的简单应用。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThreadPoolDemo</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        ExecutorService es1 <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        ExecutorService es2 <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        ExecutorService es3 <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            es1<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MyTask</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment" spellcheck="true">//es2.execute(new MyTask(i));</span>
-            <span class="token comment" spellcheck="true">//es3.execute(new MyTask(i));</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span>
-<span class="token keyword">class</span> <span class="token class-name">MyTask</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token function">MyTask</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>i <span class="token operator">=</span> i<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-</code></pre>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大家可以在自己的电脑上试一下，你会发现在这三种线程池中 newCachedThreadPool 效率是最快的，其次是 newFixedThreadPool，最后是 newCachedThreadPool。那么为什么会这样呢，我们可以看一下源码。</p>
-<h4 id="newCachedThreadPool"><a href="#newCachedThreadPool" class="headerlink" title="newCachedThreadPool"></a>newCachedThreadPool</h4><pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token function">ThreadPoolExecutor</span><span class="token punctuation">(</span><span class="token keyword">int</span> corePoolSize<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//核心线程数限制</span>
-                              <span class="token keyword">int</span> maximumPoolSize<span class="token punctuation">,</span><span class="token comment" spellcheck="true">//最大线程限制</span>
-                              <span class="token keyword">long</span> keepAliveTime<span class="token punctuation">,</span><span class="token comment" spellcheck="true">// 空闲线程存活时间</span>
-                              TimeUnit unit<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// 时间单位</span>
-                              BlockingQueue<span class="token operator">&lt;</span>Runnable<span class="token operator">></span> workQueue<span class="token punctuation">,</span><span class="token comment" spellcheck="true">// 任务队列</span>
-                              ThreadFactory threadFactory<span class="token punctuation">,</span><span class="token comment" spellcheck="true">// 线程工程</span>
-                              RejectedExecutionHandler handler<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">// 拒绝策略    </span>
-
-     <span class="token keyword">public</span> <span class="token keyword">static</span> ExecutorService <span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">,</span>
-                                    60L<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">,</span>
-                                    <span class="token keyword">new</span> <span class="token class-name">SynchronousQueue</span><span class="token operator">&lt;</span>Runnable<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span></code></pre>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过源代码我们可以看出 newCachedThreadPool 的 核心线程数为 0，最大线程数为 Integer.MAX_VALUE（即 2^31 - 1 = 2147483647，21亿多，没有哪台机器可以承受吧，所以可以理解为不受限制），然后线程的生命时长为 60s 重点是任务队列为 BlockingQueue。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;那么这里简单介绍一下 BlockingQueue。SynchronousQueue是一个不存储元素的队列。每一个put操作必须等待一个take操作，否则不能继续添加元素。也就是说一次只能处理一个线程，那么它几乎就不占用内存。接下来我画了张图。</p>
-<img src="/images/threadpool1/newCachedThreadPool.png" style="zoom:30%;">
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如图我们可以看出，线程池中的所有线程都是在非核心线程区创建的（由于核心线程区为 0），相当于假如我有100份工作，而我又能找到 100 个工人帮我去做，那么很快就可以完成，所以 newCachedThreadPool 比较快。而我们又知道，线程数和 cpu 息息相关。由于创建线程没有限制，那么所有的线程都在非核心线程区创建，CPU 会消耗大量性能去创建线程，所以 newCachedThreadPool 极有可能造成 CPU 100%。</p>
-<p>我们接下来看一看 newFixedThreadPool。</p>
-<h4 id="newFixedThreadPool"><a href="#newFixedThreadPool" class="headerlink" title="newFixedThreadPool"></a>newFixedThreadPool</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> ExecutorService <span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token keyword">int</span> nThreads<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span>nThreads<span class="token punctuation">,</span> nThreads<span class="token punctuation">,</span> 
-                                  0L<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">,</span>
-                                  <span class="token keyword">new</span> <span class="token class-name">LinkedBlockingQueue</span><span class="token operator">&lt;</span>Runnable<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;核心线程数和最大线程数都是传入参数，空闲线程存活时间为 0s（keepAliveTime 为非核心线程使用完后会多久回收，由于这里没有设置非核心线程数，所以线程使用完不回收。），注意这个任务队列为 LinkedBlockingQueue。LinkedBlockingQueue 内部基于链表来存放元素，它如果不指定容量，默认为 Integer.MAX_VALUE，也就是无界队列。（通常用的时候会设置大小，而这里没设置，为默认值。）。所以我们知道为什么第二个例子会比第一个慢了吧，第一个是用 100 个线程去完成任务，而第二个只创建了 10 个。但是 newFixedThreadPool 也有个问题，由于没有设置 LinkedBlockingQueue 的初始大小，所以它会无限大，极有可能会造成 OOM。</p>
-<img src="/images/threadpool1/newFixedThreadPool.png" style="zoom:30%;">
-
-<p>接下来我们看一下 newSingleThreadExecutor。</p>
-<h4 id="newSingleThreadExecutor"><a href="#newSingleThreadExecutor" class="headerlink" title="newSingleThreadExecutor"></a>newSingleThreadExecutor</h4><pre class=" language-java"><code class="language-java">
-<span class="token keyword">public</span> <span class="token keyword">static</span> ExecutorService <span class="token function">newSingleThreadExecutor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">FinalizableDelegatedExecutorService</span>
-      <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span>
-                              0L<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">,</span>
-                              <span class="token keyword">new</span> <span class="token class-name">LinkedBlockingQueue</span><span class="token operator">&lt;</span>Runnable<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;除了核心线程数和最大线程数为 1 以外，其他的和 newFixedThreadPool 一样。也就是说它是一个任务一个任务的进行，所以 newSingleThreadExecutor 是三个里最慢的。当然了，newSingleThreadExecutory 依然有发生 OOM 的问题。</p>
-<p>你可能会发现，官方提供的方法都有问题，我们看一下阿里的开发手册是怎么说的。</p>
-<p>![image-20210119155348262](/Users/mbp/Library/Application Support/typora-user-images/image-20210119155348262.png)</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;里面说的“通过 ThreadPoolExecutor” 的方式即<strong>自定义线程池</strong>。也是我们在面试中常遇见的一道面试题：“请说一下自定义线程池中参数的含义”。那七个我已经在上面 ThreadPoolExecutor 构造函数里标注了注释，详细内容下一篇总结线程源码时会说的。粗略地写一个和朋友交流，他们用到自定义线程池的配置吧。</p>
-<pre class=" language-java"><code class="language-java"> ThreadPoolExecutor pool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span><span class="token comment" spellcheck="true">// 自定义一个线程池</span>
-                <span class="token number">1</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// coreSize</span>
-                <span class="token number">4</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// maxSize</span>
-                <span class="token number">60</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// 60s</span>
-                TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">,</span> 
-                               <span class="token keyword">new</span> <span class="token class-name">ArrayBlockingQueue</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span> 
-                <span class="token punctuation">,</span> Executors<span class="token punctuation">.</span><span class="token function">defaultThreadFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor<span class="token punctuation">.</span>AbortPolicy</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-        <span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>这篇文章其实有点怪，但是没办法，因为我下一把篇会讲源码，所以有好多点一笔带过了。线程池（二）马上献上。</p>
+                <p>芜湖，又老一岁了，离朝气蓬勃的 20 岁越来越远，离而立之年越来越近。啧啧，难过。</p>
+<p>没想到到了这个年纪混的还是那么差，回顾过去的一年总感觉无论做什么还是却了点运气。开心过，难过过，但更多应该是孤独吧。其实孤独是每个男人应该经历的，真的，因为你在孤独中会有更多独立时间去思考之前从未想过的事。但是副作用是，你会越来越觉得一个人真好。</p>
+<p>在过去的一年中，疫情并没有消失（反而最近有点严重），工资和能力还是没有长进，还是没能找到一个可以一直陪着我的姑娘。嗯~有点小遗憾。不过我现在明确了很多方向，比如我现在应该朝着什么去努力，我想获取什么，如果获取后我应该以什么心态去迎接，如果失败了我是否能承受失利的后果，等等。。。消失了一段时间吧，不发朋友圈，很少弹琴（最近捡起来了）。不是说我什么也没做，或者装高冷，而是做了很多，但没有一件让自己骄傲的事。还是一如既往的喜欢安静，偶尔写写文章（技术），累了打打游戏或者去看小说。每天的生活虽然平淡但是却很紧巴。我现在在走一条身边人很少走的路，路上只有我一个人，有时候迷路了也没有向导，没有指南针，撞到了南墙，回头继续走。我不知道会不会走向成功，但这是我唯一的出路，也别无选择。在 2021 年已经为自己计划好了应该做什么，努力去拼就好了。</p>
+<p>这段写感谢，感谢谁呢，家人呗。他们不催我找对象（说过但没用），相信我会成功完成自己的理想，支持我继续北漂。家里出了问题也不会第一时间告诉我，怕我分心吧。很感谢，很感谢。还有为数不多的几个兄弟，他们真的是我在北漂的一块糖，伤心难过了找他们去吃东西，谈话间总能发现新段子。可以聊技术，聊八卦，聊工作，聊人生，希望以后的每一天，都能和他们相伴。</p>
+<p>涨了一岁后我并没有想走向从成熟，反而我想回到 20 岁的模样，自信有活力，不问世事。就像我置顶的微博一样：继续努力，不断奋斗   争取有趣，重新年轻。接下里的一年里我会继续努力搞技术，博客地址就在这呢，看完这篇您退后一下就可以看到我的技术博客，虽然最近更的少，但是我素材攒的可不少，只能这一阵儿快放假了，心里长草了。对于我的吉他呢，我准备出长视频了，短视频没发展，发了 16 个 视频（截止目前），只有 78 个赞，呸，一群不懂得欣赏艺术的人。会继续安安静静努力搞钱，如果搞到了，我立一个 flag：留长发，可能染个绿色。哈哈哈~</p>
+<p>过生日了，就要开开心心，最近喜欢上一首歌，毛不易的《感觉自己是巨星》。<strong>有时候我感觉自己是一个巨星，年轻貌美有才华用也用不尽。</strong> 哈哈，生日快乐。</p>
+<p>​                                                                                </p>
+<p>​                                                                                                                                                2021.2.13/ 正月初四</p>
+<p>​                                                                                                                                                                       张腾飞</p>
 
                 
             </div>
@@ -587,7 +513,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/01/23/%E7%BA%BF%E7%A8%8B%E6%B1%A0(%E4%B8%80)/">http://example.com/2021/01/23/%E7%BA%BF%E7%A8%8B%E6%B1%A0(%E4%B8%80)/</a>
+                    <a href="http://example.com/2021/02/13/%E7%94%9F%E6%97%A5%E5%BF%AB%E4%B9%90/">http://example.com/2021/02/13/%E7%94%9F%E6%97%A5%E5%BF%AB%E4%B9%90/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -625,8 +551,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Java/">
-                                    <span class="chip bg-color">Java</span>
+                                <a href="/tags/%E6%B0%B4%E6%96%87/">
+                                    <span class="chip bg-color">水文</span>
                                 </a>
                             
                         </div>
@@ -675,12 +601,12 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2021/01/23/%E7%BA%BF%E7%A8%8B%E6%B1%A0(%E4%B8%80)/">
+                <a href="/2021/02/13/%E7%94%9F%E6%97%A5%E5%BF%AB%E4%B9%90/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/threadpool1.jpg" class="responsive-img" alt="线程池（一）">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="生日快乐">
                         
-                        <span class="card-title">线程池（一）</span>
+                        <span class="card-title">生日快乐</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -691,14 +617,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%BA%BF%E7%A8%8B/" class="post-category">
-                                    线程
+                            <a href="/categories/%E6%B0%B4/" class="post-category">
+                                    水
                                 </a>
                             
                             
@@ -709,8 +635,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/%E6%B0%B4%E6%96%87/">
+                        <span class="chip bg-color">水文</span>
                     </a>
                     
                 </div>
@@ -724,12 +650,12 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/01/11/Future/">
+                <a href="/2021/02/11/%E6%89%8B%E5%86%99HashMap/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/future.jpg" class="responsive-img" alt="Future 源码浅析">
+                        <img src="/medias/featureimages/hashmap.jpg" class="responsive-img" alt="手写HashMap">
                         
-                        <span class="card-title">Future 源码浅析</span>
+                        <span class="card-title">手写HashMap</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -740,14 +666,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-02-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%BA%BF%E7%A8%8B/" class="post-category">
-                                    线程
+                            <a href="/categories/%E6%89%8B%E5%86%99/" class="post-category">
+                                    手写
                                 </a>
                             
                             
@@ -757,8 +683,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
