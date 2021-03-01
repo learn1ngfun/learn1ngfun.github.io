@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: AQS, ZTF">
+    <meta name="keywords" content="分类: MySQL, ZTF">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>分类: AQS | ZTF</title>
+    <title>分类: MySQL | ZTF</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -363,7 +363,7 @@
                 
                 <a href="/categories/AQS/" title="AQS: 2">
                     <span class="chip center-align waves-effect waves-light
-                             chip-active "
+                             chip-default "
                             style="background-color: #F9EBEA;">AQS
                         <span class="tag-length">2</span>
                     </span>
@@ -417,7 +417,7 @@
                 
                 <a href="/categories/MySQL/" title="MySQL: 1">
                     <span class="chip center-align waves-effect waves-light
-                             chip-default "
+                             chip-active "
                             style="background-color: #82E0AA;">MySQL
                         <span class="tag-length">1</span>
                     </span>
@@ -437,32 +437,30 @@
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/12/18/ReentrantLock2/">
+                    <a href="/2021/03/01/%E4%BA%8B%E5%8A%A1/">
                         <div class="card-image tag-image">
                             
-                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="重入锁 ReentrantLock 源码浅析（二）">
+                            <img src="/medias/featureimages/shiwu.jpg" class="responsive-img" alt="MySQL 事务特性及其原理">
                             
-                            <span class="card-title">重入锁 ReentrantLock 源码浅析（二）</span>
+                            <span class="card-title">MySQL 事务特性及其原理</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                上篇文章主要讲了 ReentrantLock 的加锁和入队内容，今天我们来聊一聊释放锁和出队的内容。顺便带一下非公平锁，直接进入主题。
-AQS 释放锁逻辑release(int arg)释放锁的调用关系
-ReentrantLock.unpa
+                                原子性实现原理  （Undo log）原子性是指 一个事务是一个不可分割的单位，是一个最小的操作单元。那么这些操作呢要么全成功，要么全部失败。如果事务中一个 sql  语句执行失败了，那么已经执行了的 SQL 语句就要执行回滚。回滚到事务之
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-01
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/AQS/" class="post-category">
-                                    AQS
+                                <a href="/categories/MySQL/" class="post-category">
+                                    MySQL
                                 </a>
                                 
                                 
@@ -473,53 +471,8 @@ ReentrantLock.unpa
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/Java/">
-                            <span class="chip bg-color">Java</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/12/12/ReentrantLock/">
-                        <div class="card-image tag-image">
-                            
-                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="重入锁 ReentrantLock 源码浅析（一）">
-                            
-                            <span class="card-title">重入锁 ReentrantLock 源码浅析（一）</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java 除了使用关键字 synchronized 外，还使用了 ReentrantLock 实现独占、可重入锁的功能。相较于 synchron
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-12
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/AQS/" class="post-category">
-                                    AQS
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Java/">
-                            <span class="chip bg-color">Java</span>
+                        <a href="/tags/MySQL/">
+                            <span class="chip bg-color">MySQL</span>
                         </a>
                         
                     </div>
